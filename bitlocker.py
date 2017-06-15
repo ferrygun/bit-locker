@@ -10,15 +10,19 @@ def SetSecretPin():
     index = 0
     myPin = list(range(4))
     loop = True
+    
+    stage = 0
+    
     while (loop):
-        if button_a.was_pressed():
+        loop1 = True
+        if (button_a.was_pressed() and stage == 0):
             if (data >= 9): 
                 data = 0
             else:
                 data += 1
             display.show(str(data))
             
-        if button_b.was_pressed(): 
+        if (button_b.was_pressed() and stage == 0): 
             display.show(str(data))
             if index < 4:
                 myPin[index] = data
@@ -30,12 +34,37 @@ def SetSecretPin():
                 index += 1
                 
                 if index >=4:
-                    SetPin(myPin)
-                    #display.scroll('Pin is Set')
-                    music.play(music.JUMP_UP)
-                    loop = False
+                    stage = 1
+                    display.scroll("Pin Is:")
+                    sleep(1000)
+                    
+                    for i in range(len(myPin)):
+                        display.show(str(myPin[i]))
+                        sleep(1000)
+                        display.clear()
+                        sleep(1000)
+                    
+                    display.scroll("Confirm?")
+                    
+                    while (loop1):
+                        if (button_a.was_pressed() and stage == 1): 
+                            SetPin(myPin)
+                            display.show("C")
+                            music.play(music.JUMP_UP)
+                            sleep(1000)
+                            loop1 = False
+                            stage = 0
+                            loop = False
+                            
+                        if (button_b.was_pressed() and stage == 1):
+                            display.show("N")
+                            music.play(music.JUMP_UP)
+                            stage = 0
+                            index = 0
+                            loop1 = False
 def GetUnlock(p):
     display.show('E')
+    music.play(music.JUMP_UP)
     mySPin = p
     mySPin = mySPin[1:]
     mySPin = mySPin[:-1]
@@ -135,13 +164,16 @@ def Main():
                 
             if button_b.was_pressed():
                 #set_value(1)
+                display.show('R')
+                music.play(music.JUMP_UP) 
                 display.clear()  
                 SetSecretPin()
                 
         else: 
             if PinExists():
                 myPin = GetPin()
-                display.show('E')
+                #display.show('E')
+                #music.play(music.JUMP_UP) 
                 
                 if GetUnlock(myPin):
                     for i in range(0,3):
@@ -160,9 +192,10 @@ def Main():
                     music.play(music.POWER_DOWN) 
             else: 
                 display.show('S')
+                music.play(music.JUMP_UP)
                 SetSecretPin()
         
         
-
-    
+   
 Main()       
+
