@@ -114,18 +114,14 @@ def set_value(new_value):
     global global_variable
     global_variable = new_value
     
-global_variable = 1
+global_variable = 1 #1 = activated, 2 = deactivated
 
 #######################################    
 def Main():
-    arm = True
-   
-    
-    while (arm):
+    while True:
                   
         if (str(pin1.read_analog()) !="3"):
             if (get_value() == 1):
-                #display.show("X")
                 music.play(music.PYTHON)
         else:
             display.clear()
@@ -167,5 +163,6 @@ def Main():
                 SetSecretPin()
         
         
-   
+
+    
 Main()       
