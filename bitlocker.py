@@ -80,12 +80,8 @@ def GetUnlock(p):
     while (loop):
         if (str(pin1.read_analog()) !="3"):
             if (get_value() == 1):
-                #display.show("X")
                 music.play(music.PYTHON)
                 
-        #else:
-            #display.clear()
-            
         if button_a.was_pressed():
             if (data >= 9): 
                 data = 0
@@ -163,7 +159,6 @@ def Main():
                 music.play(music.JUMP_DOWN) 
                 
             if button_b.was_pressed():
-                #set_value(1)
                 display.show('R')
                 music.play(music.JUMP_UP) 
                 display.clear()  
@@ -172,9 +167,7 @@ def Main():
         else: 
             if PinExists():
                 myPin = GetPin()
-                #display.show('E')
-                #music.play(music.JUMP_UP) 
-                
+               
                 if GetUnlock(myPin):
                     for i in range(0,3):
                         display.show(Image.HAPPY)
@@ -196,6 +189,7 @@ def Main():
                 SetSecretPin()
         
         
-   
+    
 Main()       
+
 
